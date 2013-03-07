@@ -9,8 +9,9 @@ describe('webremix', function() {
     it('returns embed code for a youtu.be short url', function(done) {
       var youtube = 'http://youtu.be/5cazkHAHiPU';
       webRemix.generate(youtube, function(err, subject) {
-        subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" src="//www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
-        'frameborder="0" allowfullscreen></iframe></div>');
+        subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" ' +
+          'src="//www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
+          'frameborder="0" allowfullscreen></iframe></div>');
         done();
       });
     });
@@ -18,7 +19,8 @@ describe('webremix', function() {
     it('returns embed code for a youtube normal url', function(done) {
       var youtube = 'http://www.youtube.com/watch?v=5cazkHAHiPU';
       webRemix.generate(youtube, function(err, subject) {
-        subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" src="//www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
+        subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" ' +
+          'src="//www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
           'frameborder="0" allowfullscreen></iframe></div>');
         done();
       });
@@ -33,7 +35,7 @@ describe('webremix', function() {
       });
     });
 
-    it('returns oembed code for a soundcloud url', function(done) {
+    it('returns oembed code for a soundcloud url', function() {
       var soundcloud = 'http://soundcloud.com/skeptical/sets/tracks-576/';
       var scope = nock('soundcloud.com').get('/oembed?format=json&url=http//soundcloud.com/track').reply(200,
           { html: '<iframe src="//w.soundcloud.com/player/?url=http%3A' +
@@ -108,7 +110,8 @@ describe('webremix', function() {
     it('returns escaped text and links', function(done) {
       var mix = '<script>alert("omg");</script> http://instagram.com/p/QFJJzTw8yS/ bunnies';
       webRemix.generate(mix, function(err, subject) {
-        subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; <div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/">' +
+        subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; <div class="image-wrapper">' +
+          '<a href="http://instagram.com/p/QFJJzTw8yS/">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies');
         done();
       });
