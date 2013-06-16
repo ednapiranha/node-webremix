@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.NODE_ENV = 'test';
+
 var nock = require('nock');
 var should = require('should');
 var webRemix = require('../index');
@@ -37,17 +39,16 @@ describe('webremix', function() {
 
     it('returns oembed code for a soundcloud url', function() {
       var soundcloud = 'http://soundcloud.com/skeptical/sets/tracks-576/';
-      var scope = nock('soundcloud.com').get('/oembed?format=json&url=http//soundcloud.com/track').reply(200,
-          { html: '<iframe src="//w.soundcloud.com/player/?url=http%3A' +
-          '%2F%2Fapi.soundcloud.com%2Fplaylists%2F723408&amp;show_artwork=true" frameborder="no" height="450" ' +
-          'scrolling="no" width="100%"></iframe><a class="media-link" target="_blank"' +
-          'href="http://soundcloud.com/skeptical/sets/tracks-576/">http://soundcloud.com/skeptical/sets' +
-          '/tracks-576/</a><a href="http://soundcloud.com/skeptical/sets/tracks-576/" target="_blank" class="media-off" ' +
-          '>http://soundcloud.com/skeptical/sets/tracks-576/</a>' });
+      var htmlBlock = '<iframe src="//w.soundcloud.com/player/' +
+          '?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F723408&amp;show_artwork=true" frameborder="no" ' +
+          'height="450" scrolling="no" width="100%"></iframe><a class="media-link" target="_blank" ' +
+          'href="http://soundcloud.com/skeptical/sets/tracks-576/">http://soundcloud.com/skeptical/sets/' +
+          'tracks-576/</a><a href="http://soundcloud.com/skeptical/sets/tracks-576/" target="_blank" ' +
+          'class="media-off" >http://soundcloud.com/skeptical/sets/tracks-576/</a>';
+      var scope = nock('http://soundcloud.com').get('/oembed?format=json&url=http%3A%2F%2Fsoundcloud.com%2Fskeptical%2Fsets%2Ftracks-576%2F')
+                                               .reply(200, { html: htmlBlock });
       webRemix.generate(soundcloud, function(err, subject) {
-        subject.should.equal('<div class="object-wrapper"><iframe width="100%" height="450" scrolling="no" frameborder="no" ' +
-          'src="//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F723408&show_artwork=true">' +
-          '</iframe></div>');
+        subject.should.equal('<div class="object-wrapper">' + htmlBlock + '</div>');
         done();
       });
     });
