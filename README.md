@@ -1,7 +1,5 @@
 # Webremix
 
-## What it is
-
 Converts your media urls and links to embedded HTML.
 
 ## Installation
@@ -49,4 +47,4 @@ If you want to pass in a different width and height for Youtube/Vimeo/Rdio, pass
 
 ## Testing
 
-    make test
+    npm test
