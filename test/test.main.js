@@ -91,9 +91,9 @@ describe('webremix', function () {
     it('returns a regular link', function (done) {
       var link = 'http://poop.com';
       var scope = nock('poop.com').get('http://poop.com').reply(200,
-          { html: '<a href="http://poop.com">http://poop.com</a>' });
+          { html: '<a href="http://poop.com" target="_blank">http://poop.com</a>' });
       webRemix.generate(link, function (err, subject) {
-        subject.should.equal('<a href="http://poop.com">http://poop.com</a>');
+        subject.should.equal('<a href="http://poop.com" target="_blank">http://poop.com</a>');
         done();
       });
     });
@@ -103,7 +103,7 @@ describe('webremix', function () {
     it('returns image code for an instagr.am url', function (done) {
       var instagram = 'http://instagram.com/p/QFJJzTw8yS/';
       webRemix.generate(instagram, function (err, subject) {
-        subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/">' +
+        subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div>');
         done();
       });
@@ -114,7 +114,7 @@ describe('webremix', function () {
     it('returns a mix of text and links', function (done) {
       var mix = 'http://instagram.com/p/QFJJzTw8yS/ bunnies';
       webRemix.generate(mix, function (err, subject) {
-        subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/">' +
+        subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies');
         done();
       });
@@ -124,7 +124,7 @@ describe('webremix', function () {
       var mix = '<script>alert("omg");</script> http://instagram.com/p/QFJJzTw8yS/ bunnies';
       webRemix.generate(mix, function (err, subject) {
         subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; <div class="image-wrapper">' +
-          '<a href="http://instagram.com/p/QFJJzTw8yS/">' +
+          '<a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies');
         done();
       });
