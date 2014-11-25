@@ -130,4 +130,17 @@ describe('webremix', function () {
       });
     });
   });
+
+  describe('vine',  function () {
+    it('returns embed code for a vine url', function (done) {
+      var vimeo = 'https://vine.co/v/bjHh0zHdgZT';
+      webRemix.generate(vimeo, function (err, subject) {
+        subject.should.equal('<div class="object-wrapper"><iframe class="vine-embed" src="https://vine.co/v/bjHh0zHdgZT/embed/simple" width="525" ' +
+          'height="295" frameborder="0"></iframe><script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script></div>');
+        done();
+      });
+    });
+  });
+
+
 });
