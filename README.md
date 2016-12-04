@@ -24,7 +24,7 @@ Output becomes:
 
 ## Video size options
 
-If you want to pass in a different width and height for Youtube/Vimeo/Rdio, pass in the following:
+If you want to pass in a different width and height for Youtube/Vimeo, pass in the following:
 
     var options = {
         width: 500,
@@ -43,7 +43,6 @@ If you want to pass in a different width and height for Youtube/Vimeo/Rdio, pass
 * Youtube urls
 * Vimeo urls
 * Soundcloud urls (will fall back to a regular link if the author has sharing disabled)
-* Rdio urls
 
 ## Testing
 
