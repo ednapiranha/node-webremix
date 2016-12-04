@@ -1,40 +1,39 @@
-'use strict';
+'use strict'
 
-var remix = require('./lib/remix');
+const remix = require('./lib/remix')
 
-exports.generate = function(content, options, callback) {
-  var contentArr = content.split(/\s/);
-  var finalContent = [];
+exports.generate = function (content, options, callback) {
+  let contentArr = content.split(/\s/)
+  var finalContent = []
 
   if (!callback) {
-    callback = options;
-    options = {};
+    callback = options
+    options = {}
   }
 
-  contentArr.forEach(function(content, idx) {
-    process.nextTick(function() {
-      remix.process(content, options, function(err, resp) {
+  contentArr.forEach((content, idx) => {
+    setImmediate(() => {
+      remix.process(content, options, (err, resp) => {
         if (err) {
-          callback(err);
-
+          callback(err)
         } else {
-          finalContent.push({ id: idx, message: resp });
+          finalContent.push({ id: idx, message: resp })
         }
 
         if (finalContent.length === contentArr.length) {
-          var messageArr = [];
+          var messageArr = []
 
-          finalContent = finalContent.sort(function(a, b) {
-            return parseInt(a.id, 10) - parseInt(b.id, 10);
-          });
+          finalContent = finalContent.sort((a, b) => {
+            return parseInt(a.id, 10) - parseInt(b.id, 10)
+          })
 
-          finalContent.forEach(function(m) {
-            messageArr.push(m.message);
-          });
+          finalContent.forEach((m) => {
+            messageArr.push(m.message)
+          })
 
-          callback(null, messageArr.join(' '));
+          callback(null, messageArr.join(' '))
         }
-      });
-    });
-  });
-};
+      })
+    })
+  })
+}
