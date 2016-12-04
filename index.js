@@ -12,7 +12,7 @@ exports.generate = function (content, options, callback) {
   }
 
   contentArr.forEach((content, idx) => {
-    setImmediate(() => {
+    setTimeout(() => {
       remix.process(content, options, (err, resp) => {
         if (err) {
           callback(err)
@@ -34,6 +34,6 @@ exports.generate = function (content, options, callback) {
           callback(null, messageArr.join(' '))
         }
       })
-    })
+    }, 0)
   })
 }
