@@ -13,7 +13,7 @@ describe('webremix', () => {
       let youtube = 'http://youtu.be/5cazkHAHiPU'
       webRemix.generate(youtube, (_, subject) => {
         subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" ' +
-          'src="//www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
+          'src="http://www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
           'frameborder="0" allowfullscreen></iframe></div>')
         done()
       })
@@ -23,7 +23,7 @@ describe('webremix', () => {
       let youtube = 'http://www.youtube.com/watch?v=5cazkHAHiPU'
       webRemix.generate(youtube, (_, subject) => {
         subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" ' +
-          'src="//www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
+          'src="http://www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
           'frameborder="0" allowfullscreen></iframe></div>')
         done()
       })
