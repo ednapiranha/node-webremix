@@ -1,6 +1,6 @@
 {
   "name": "webremix",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Convert media urls and links to embedded HTML",
   "main": "index.js",
   "dependencies": {
