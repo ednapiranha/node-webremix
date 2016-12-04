@@ -71,6 +71,18 @@ describe('webremix', () => {
     })
   })
 
+  describe('link', () => {
+    it('returns an invalid link', (done) => {
+      let link = 'shttp://spoop.com'
+      let n = nock('spoop.com').get('shttp://spoop.com').reply(200,
+        { html: 'shttp://spoop.com' })
+      webRemix.generate(link, (_, subject) => {
+        subject.should.equal('shttp://spoop.com')
+        done()
+      })
+    })
+  })
+
   describe('instagram', () => {
     it('returns image code for an instagr.am url', (done) => {
       let instagram = 'http://instagram.com/p/QFJJzTw8yS/'
