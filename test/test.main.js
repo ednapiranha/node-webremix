@@ -34,7 +34,7 @@ describe('webremix', () => {
     it('returns embed code for a vimeo video url', (done) => {
       let vimeo = 'http://vimeo.com/37872583'
       webRemix.generate(vimeo, (_, subject) => {
-        subject.should.equal('<div class="object-wrapper"><iframe src="//player.vimeo.com/video/37872583" width="525" height="295" ' +
+        subject.should.equal('<div class="object-wrapper"><iframe src="http://player.vimeo.com/video/37872583" width="525" height="295" ' +
           'frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>')
         done()
       })
