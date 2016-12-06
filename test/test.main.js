@@ -13,7 +13,7 @@ describe('webremix', () => {
       let youtube = 'http://youtu.be/5cazkHAHiPU'
       webRemix.generate(youtube, (_, subject) => {
         subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" ' +
-          'src="http://www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
+          'src="https://www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
           'frameborder="0" allowfullscreen></iframe></div>')
         done()
       })
@@ -23,7 +23,7 @@ describe('webremix', () => {
       let youtube = 'http://www.youtube.com/watch?v=5cazkHAHiPU'
       webRemix.generate(youtube, (_, subject) => {
         subject.should.equal('<div class="object-wrapper"><iframe width="525" height="295" ' +
-          'src="http://www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
+          'src="https://www.youtube.com/embed/5cazkHAHiPU?wmode=transparent" ' +
           'frameborder="0" allowfullscreen></iframe></div>')
         done()
       })
@@ -34,7 +34,7 @@ describe('webremix', () => {
     it('returns embed code for a vimeo video url', (done) => {
       let vimeo = 'http://vimeo.com/37872583'
       webRemix.generate(vimeo, (_, subject) => {
-        subject.should.equal('<div class="object-wrapper"><iframe src="http://player.vimeo.com/video/37872583" width="525" height="295" ' +
+        subject.should.equal('<div class="object-wrapper"><iframe src="https://player.vimeo.com/video/37872583" width="525" height="295" ' +
           'frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>')
         done()
       })
@@ -88,7 +88,7 @@ describe('webremix', () => {
       let instagram = 'http://instagram.com/p/QFJJzTw8yS/'
       webRemix.generate(instagram, (_, subject) => {
         subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
-          '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div>')
+          '<img src="https://instagr.am/p/QFJJzTw8yS/media/"/></a></div>')
         done()
       })
     })
@@ -99,7 +99,7 @@ describe('webremix', () => {
       var mix = 'http://instagram.com/p/QFJJzTw8yS/ bunnies'
       webRemix.generate(mix, (_, subject) => {
         subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
-          '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies')
+          '<img src="https://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies')
         done()
       })
     })
@@ -109,7 +109,7 @@ describe('webremix', () => {
       webRemix.generate(mix, (_, subject) => {
         subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; <div class="image-wrapper">' +
           '<a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
-          '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies')
+          '<img src="https://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies')
         done()
       })
     })
