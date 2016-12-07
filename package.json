@@ -4,6 +4,7 @@
   "description": "Convert media urls and links to embedded HTML",
   "main": "index.js",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "request": "^2.79.0"
   },
   "devDependencies": {

@@ -83,12 +83,36 @@ describe('webremix', () => {
     })
   })
 
+  let htmlInstaBlock = '<blockquote class="instagram-media" data-instgrm-version="7" ' +
+    'style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 ' +
+    'rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; ' +
+    'width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div ' +
+    'style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; ' +
+    'padding:50.0% 0; text-align:center; width:100%;"> <div style=" ' +
+    'background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABG' +
+    'dBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgC' +
+    'ES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNRe' +
+    'E07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfH' +
+    'qn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy2' +
+    '31MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 ' +
+    'auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" ' +
+    'color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; ' +
+    'margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; ' +
+    'text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/BNm2WJhBpf2/"' +
+    ' style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; ' +
+    'font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A video posted ' +
+    'by Year Unknown (@yearunknown)</a> on <time style=" font-family:Arial,sans-serif; ' +
+    'font-size:14px; line-height:17px;" datetime="2016-12-04T19:30:24+00:00">Dec 4, 2016 at 11:30am' +
+    ' PST</time></p></div></blockquote>\n<script async defer src="//platform.instagram.com/en_US/' +
+    'embeds.js"></script>'
+
   describe('instagram', () => {
-    it('returns image code for an instagr.am url', (done) => {
-      let instagram = 'http://instagram.com/p/QFJJzTw8yS/'
+    it('returns image embed for an instagram url', (done) => {
+      let instagram = 'https://www.instagram.com/p/BNm2WJhBpf2/'
+      let n = nock('http://api.instagram.com').get('/oembed?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FBNm2WJhBpf2%2F')
+                                              .reply(200, { html: htmlInstaBlock })
       webRemix.generate(instagram, (_, subject) => {
-        subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
-          '<img src="https://instagr.am/p/QFJJzTw8yS/media/"/></a></div>')
+        subject.should.equal('<div class="object-wrapper">' + htmlInstaBlock + '</div>')
         done()
       })
     })
@@ -96,20 +120,20 @@ describe('webremix', () => {
 
   describe('variety mix', () => {
     it('returns a mix of text and links', (done) => {
-      var mix = 'http://instagram.com/p/QFJJzTw8yS/ bunnies'
+      let instagram = 'https://www.instagram.com/p/BNm2WJhBpf2/'
+      let n = nock('http://api.instagram.com').get('/oembed?url=https%3A%2F%2Fwww.instagram.com%2Fp%2FBNm2WJhBpf2%2F')
+                                              .reply(200, { html: htmlInstaBlock })
+      let mix = instagram + ' bunnies'
       webRemix.generate(mix, (_, subject) => {
-        subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
-          '<img src="https://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies')
+        subject.should.equal('<div class="object-wrapper">' + htmlInstaBlock + '</div> bunnies')
         done()
       })
     })
 
     it('returns escaped text and links', (done) => {
-      let mix = '<script>alert("omg");</script> http://instagram.com/p/QFJJzTw8yS/ bunnies'
+      let mix = '<script>alert("omg");</script> bunnies'
       webRemix.generate(mix, (_, subject) => {
-        subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; <div class="image-wrapper">' +
-          '<a href="http://instagram.com/p/QFJJzTw8yS/" target="_blank">' +
-          '<img src="https://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies')
+        subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; bunnies')
         done()
       })
     })
